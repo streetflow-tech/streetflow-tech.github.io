@@ -98,7 +98,16 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+        }
+
+        .hero-map {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 2rem auto;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            position: relative;
+            order: -1;
         }
 
         .hero-left h1 {
@@ -106,7 +115,7 @@
             line-height: 1.05;
             margin-bottom: 0.75rem;
             color: #333;
-            max-width: 60%;
+            max-width: 100%;
         }
 
         .hero-left p {
@@ -114,17 +123,7 @@
             line-height: 1.3;
             color: #555;
             margin-bottom: 1rem;
-            max-width: 60%;
-        }
-
-        .hero-map {
-            width: 45%;
-            position: absolute;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            border-radius: 0.75rem;
-            overflow: hidden;
+            max-width: 100%;
         }
 
         .hero-right {
