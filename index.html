@@ -327,11 +327,13 @@
             justify-content: space-between;
             align-items: center;
             margin: 4rem 0;
+            position: relative;
         }
 
         .join-section h2 {
             font-size: 2.5rem;
             font-weight: 500;
+            padding-right: 200px;
         }
 
         .join-section .contact-button {
@@ -341,6 +343,11 @@
             border-radius: 2rem;
             text-decoration: none;
             font-weight: 500;
+            white-space: nowrap;
+            position: absolute;
+            right: 3rem;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .why-streetflow {
@@ -487,15 +494,22 @@
             .footer-content {
                 flex-direction: column;
                 gap: 2rem;
+                align-items: center;
                 text-align: center;
             }
 
             .footer-text {
                 text-align: center;
+                width: 100%;
+            }
+
+            .footer-text p {
+                margin: 0 auto;
             }
 
             .social-links {
                 justify-content: center;
+                width: 100%;
             }
 
             .footer-email {
@@ -600,13 +614,19 @@
             /* Join section mobile styles */
             .join-section {
                 flex-direction: column;
-                gap: 1.5rem;
                 padding: 2rem 1.5rem;
                 text-align: center;
             }
 
             .join-section h2 {
+                padding-right: 0;
                 font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .join-section .contact-button {
+                position: static;
+                transform: none;
             }
 
             /* Benefits section mobile styles */
