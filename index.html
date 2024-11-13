@@ -107,7 +107,7 @@
             align-self: flex-end;
             border-radius: 0.75rem;
             overflow: hidden;
-            margin-bottom: auto;
+            margin-bottom: 2rem;
             aspect-ratio: 16/9;
         }
 
@@ -765,6 +765,15 @@
             .feature-card h2,
             .feature-card p {
                 max-width: 100%;
+            }
+        }
+
+        /* Update mobile styles */
+        @media (max-width: 768px) {
+            .hero-map {
+                width: 100%;
+                max-width: 100%;
+                margin-bottom: 1.5rem;
             }
         }
     </style>
