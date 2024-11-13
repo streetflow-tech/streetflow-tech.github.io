@@ -98,18 +98,17 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            min-height: 400px;
+            min-height: max(400px, calc(45vw * 9/16 + 4rem));
         }
 
         .hero-map {
             width: 45%;
             max-width: 300px;
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
+            align-self: flex-end;
             border-radius: 0.75rem;
             overflow: hidden;
-            order: -1;
+            margin-bottom: auto;
+            aspect-ratio: 16/9;
         }
 
         .hero-left h1 {
@@ -118,21 +117,21 @@
             margin-bottom: 0.75rem;
             color: #333;
             max-width: 50%;
-            margin-top: auto;
         }
 
         .hero-left p {
             font-size: 1rem;
             line-height: 1.3;
             color: #555;
-            margin-bottom: 1rem;
+            margin-bottom: 0;
             max-width: 50%;
         }
 
         .hero-right {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            min-height: max(400px, calc(45vw * 9/16 + 4rem));
         }
 
         .feature-card {
@@ -141,6 +140,9 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            position: relative;
+            padding-right: calc(48% + 1rem);
+            flex: 1;
         }
 
         .feature-card.green {
@@ -164,11 +166,16 @@
             margin-bottom: 0.5rem;
         }
 
-        .feature-card img {
-            width: 100%;
+        .feature-card img:not(.hero-map) {
+            width: 45%;
+            max-width: 300px;
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
             border-radius: 0.75rem;
-            aspect-ratio: 16/7;
+            aspect-ratio: 16/9;
             object-fit: cover;
+            margin-left: 1rem;
         }
 
         .how-it-works {
@@ -558,8 +565,12 @@
             }
 
             .hero-left {
-                min-height: unset;
                 padding: 1.5rem;
+            }
+
+            .hero-left h1,
+            .hero-left p {
+                max-width: 100%;
             }
 
             .hero-map {
@@ -568,12 +579,7 @@
                 max-width: 100%;
                 top: unset;
                 right: unset;
-                margin-bottom: 1.5rem;
-            }
-
-            .hero-left h1,
-            .hero-left p {
-                max-width: 100%;
+                margin-top: 1.5rem;
             }
 
             /* Main content padding */
@@ -738,6 +744,29 @@
                 margin-top: 1.5rem;
             }
         }
+
+        /* Update mobile styles for feature cards only */
+        @media (max-width: 768px) {
+            .feature-card {
+                min-height: unset;
+                padding-right: 1.5rem;
+            }
+
+            .feature-card img:not(.hero-map) {
+                position: relative;
+                width: 100%;
+                max-width: 100%;
+                bottom: unset;
+                right: unset;
+                margin-top: 1rem;
+                margin-left: 0;
+            }
+
+            .feature-card h2,
+            .feature-card p {
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -768,9 +797,9 @@
     <main class="main-content">
         <section class="hero-section">
             <div class="hero-left">
+                <img src="assets/topo.png" alt="Topographic visualization" class="hero-map"> 
                 <h1>StreetFlow:<br>AI-Powered<br>Urban Monitoring</h1>
                 <p>Leveraging existing street cameras to provide real-time insights for flood detection, snow accumulation, and traffic monitoring.</p>
-                <img src="assets/topo.png" alt="Topographic visualization" class="hero-map">
             </div>
             <div class="hero-right">
                 <div class="feature-card green">
