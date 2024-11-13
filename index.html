@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreetFlow - AI-Powered Urban Monitoring</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #ffffff;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: white;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            background: #4178DC;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo-image::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .contact-button {
+            background: #4178DC;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .main-content {
+            padding: 1.5rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .hero-left {
+            background: #B8CEFF;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero-left h1 {
+            font-size: 3rem;
+            line-height: 1.05;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+
+        .hero-left p {
+            font-size: 1rem;
+            line-height: 1.3;
+            color: #555;
+            margin-bottom: 1rem;
+            max-width: 500px;
+        }
+
+        .hero-map {
+            width: 60%;
+            margin-left: auto;
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .feature-card.green {
+            background: #98FB98;
+        }
+
+        .feature-card.dark-green {
+            background: #004d40;
+            color: white;
+        }
+
+        .feature-card h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card img {
+            width: 100%;
+            border-radius: 0.75rem;
+            aspect-ratio: 16/7;
+            object-fit: cover;
+        }
+
+        .how-it-works {
+            margin: 4rem 0;
+        }
+
+        .how-it-works h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .step-card {
+            background: #4178DC;
+            padding: 2rem;
+            border-radius: 1rem;
+            color: white;
+            position: relative;
+        }
+
+        .search-box {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-box::before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid #4178DC;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .search-box::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 2px;
+            background: #4178DC;
+            transform: rotate(45deg);
+            margin-left: 15px;
+            margin-top: 15px;
+        }
+
+        .step-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .step-card p {
+            font-size: 1rem;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .key-benefits {
+            margin: 4rem 0;
+        }
+
+        .key-benefits h2 {
+            font-size: 3.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .benefits-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefit-item {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid #E5E5E5;
+        }
+
+        .benefit-item:last-child {
+            border-bottom: none;
+        }
+
+        .benefit-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .search-icon::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 2px;
+            background: #333;
+            bottom: -5px;
+            right: -5px;
+            transform: rotate(45deg);
+        }
+
+        .benefit-item h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .benefit-item p {
+            color: #666;
+            line-height: 1.5;
+            font-size: 1rem;
+            padding-left: 2.5rem;
+        }
+
+        .benefits-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 1rem;
+        }
+
+        .join-section {
+            background: #4178DC;
+            color: white;
+            padding: 2rem 3rem;
+            border-radius: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 4rem 0;
+        }
+
+        .join-section h2 {
+            font-size: 2.5rem;
+            font-weight: 500;
+        }
+
+        .join-section .contact-button {
+            background: white;
+            color: #4178DC;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .why-streetflow {
+            margin: 4rem 0;
+        }
+
+        .why-streetflow-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .why-streetflow-title {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            font-weight: 600;
+        }
+
+        .why-streetflow-features {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .feature-item {
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid #E5E5E5;
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .feature-item p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .achievement-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background: #F5F5F5;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .team-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .achievement-content {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .achievement-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .learn-more {
+            color: #4178DC;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer {
+            background: #4178DC;
+            color: white;
+            padding: 4rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            text-align: left;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-email {
+            font-size: 3.5rem;
+            margin: 2rem 0;
+            font-weight: 500;
+        }
+
+        .footer-links {
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .separator {
+            margin: 0 0.5rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer-text {
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .footer-email {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .why-streetflow-header {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .why-streetflow-title {
+                font-size: 2.5rem;
+            }
+
+            .achievement-section {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-container {
+                grid-template-columns: 1fr;
+            }
+
+            .key-benefits h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Optional: Add padding to account for fixed header */
+        section {
+            scroll-margin-top: 80px; /* Adjust this value based on your navbar height */
+        }
+
+        @media (max-width: 768px) {
+            /* Navbar mobile styles */
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none; /* Hide default nav links on mobile */
+            }
+
+            /* Add hamburger menu for mobile */
+            .mobile-menu-button {
+                display: block;
+                font-size: 1.5rem;
+                background: none;
+                border: none;
+                color: #333;
+                cursor: pointer;
+            }
+
+            /* Hero section mobile styles */
+            .hero-section {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 0.5rem 0;
+            }
+
+            .hero-left {
+                padding: 1.5rem;
+            }
+
+            .hero-left h1 {
+                font-size: 2.25rem;
+            }
+
+            .hero-map {
+                width: 100%;
+                margin: 1rem 0;
+            }
+
+            /* Main content padding */
+            .main-content {
+                padding: 1rem 1.5rem;
+            }
+
+            /* How it works mobile styles */
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .step-card {
+                padding: 1.5rem;
+            }
+
+            /* Join section mobile styles */
+            .join-section {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 2rem 1.5rem;
+                text-align: center;
+            }
+
+            .join-section h2 {
+                font-size: 2rem;
+            }
+
+            /* Benefits section mobile styles */
+            .benefits-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .benefit-item {
+                margin-bottom: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+
+            /* Why StreetFlow section mobile styles */
+            .why-streetflow-header {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .why-streetflow-title {
+                font-size: 2rem;
+            }
+
+            .achievement-section {
+                grid-template-columns: 1fr;
+            }
+
+            .achievement-content {
+                padding: 1.5rem;
+            }
+
+            .achievement-content h3 {
+                font-size: 1.5rem;
+            }
+
+            /* Footer mobile styles */
+            .footer {
+                padding: 2rem 1.5rem;
+            }
+
+            .footer-email {
+                font-size: 2rem;
+                word-break: break-all;
+            }
+        }
+
+        /* Add styles for mobile menu */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            padding: 2rem;
+            z-index: 1000;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Add tablet breakpoint */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .steps-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-content {
+                padding: 1.5rem 2rem;
+            }
+        }
+
+        .mobile-menu-button {
+            display: none; /* Hidden by default */
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: #333;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: block; /* Show on mobile */
+            }
+
+            .navbar {
+                justify-content: space-between; /* Ensure logo and button are on opposite ends */
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <div class="logo-image"></div>
+            <span class="logo-text">StreetFlow</span>
+        </div>
+        <button class="mobile-menu-button">☰</button>
+        <div class="nav-links">
+            <a href="#how-it-works" class="nav-link">How it works</a>
+            <a href="#benefits" class="nav-link">Benefits</a>
+            <a href="#why-choose-us" class="nav-link">Why choose us</a>
+            <a href="#contact" class="contact-button">Contact us</a>
+        </div>
+    </nav>
+
+    <div class="mobile-nav">
+        <button class="close-menu">✕</button>
+        <div class="nav-links">
+            <a href="#how-it-works" class="nav-link">How it works</a>
+            <a href="#benefits" class="nav-link">Benefits</a>
+            <a href="#why-choose-us" class="nav-link">Why choose us</a>
+            <a href="#contact" class="contact-button">Contact us</a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="hero-left">
+                <h1>StreetFlow:<br>AI-Powered<br>Urban Monitoring</h1>
+                <p>Leveraging existing street cameras to provide real-time insights for flood detection, snow accumulation, and traffic monitoring.</p>
+                <img src="path-to-map-image.jpg" alt="Topographic visualization" class="hero-map">
+            </div>
+            <div class="hero-right">
+                <div class="feature-card green">
+                    <h2>Urban Planning & Environment</h2>
+                    <p>Use real-time and historical data to guide infrastructure improvements and resilience.</p>
+                    <img src="path-to-urban-image.jpg" alt="Urban surveillance">
+                </div>
+                <div class="feature-card dark-green">
+                    <h2>Emergency & Traffic</h2>
+                    <p>Immediate updates on weather and road conditions to aid emergency teams and manage city traffic effectively.</p>
+                    <img src="path-to-traffic-image.jpg" alt="Traffic monitoring">
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works" id="how-it-works">
+            <h2>How it works</h2>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="search-box"></div>
+                    <h3>Real-Time Monitoring</h3>
+                    <p>Our technology continuously analyzes camera footage, detecting critical events as they happen.</p>
+                </div>
+                <div class="step-card">
+                    <div class="search-box"></div>
+                    <h3>Data collection</h3>
+                    <p>We gather statistical data on floods, snow, and traffic patterns, supporting long-term urban planning.</p>
+                </div>
+                <div class="step-card">
+                    <div class="search-box"></div>
+                    <h3>AI-driven insights</h3>
+                    <p>Our sophisticated algorithms provide actionable insights, enabling better resource allocation and response strategies.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="key-benefits" id="benefits">
+            <h2>Key benefits</h2>
+            <div class="benefits-container">
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <div class="benefit-header">
+                            <div class="search-icon"></div>
+                            <h3>Cost-Effective Solutions</h3>
+                        </div>
+                        <p>By utilizing existing infrastructure, we eliminate the need for expensive new hardware installations.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-header">
+                            <div class="search-icon"></div>
+                            <h3>Immediate Response</h3>
+                        </div>
+                        <p>Our system allows cities to act quickly in emergencies, minimizing damage and enhancing public safety.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-header">
+                            <div class="search-icon"></div>
+                            <h3>Support for Urban Resilience</h3>
+                        </div>
+                        <p>Data-driven insights foster smarter planning and preparation for future challenges, improving overall city resilience.</p>
+                    </div>
+                </div>
+                <img src="path-to-aerial-image.jpg" alt="Aerial view of coastal urban area" class="benefits-image">
+            </div>
+        </section>
+
+        <section class="join-section">
+            <h2>Join us in building smarter cities</h2>
+            <a href="#contact" class="contact-button">Contact us</a>
+        </section>
+
+        <section class="why-streetflow" id="why-choose-us">
+            <div class="why-streetflow-header">
+                <h2 class="why-streetflow-title">Why StreetFlow is your go-to solution for urban monitoring</h2>
+                <div class="why-streetflow-features">
+                    <div class="feature-item">
+                        <h3>Proven Technology</h3>
+                        <p>Our solution has been recognized with accolades, including winning the Garage48 Hackathon with a working prototype in just 48 hours.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Future Scalability</h3>
+                        <p>StreetFlow is adaptable to various urban challenges, from monitoring environmental conditions to optimizing traffic flow.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Dedicated Team</h3>
+                        <p>Our experienced team specializes in computer vision, product design, and business strategy, ensuring we deliver the best solutions for urban needs.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="achievement-section">
+                <img src="path-to-team-image.jpg" alt="Team photo" class="team-image">
+                <div class="achievement-content">
+                    <h3>First place at the Ecotech Hackathon in Estonia by Garage48</h3>
+                    <a href="https://garage48.org/blog/ecotech-hackathon-we-made-urban-water-smart" class="learn-more" target="_blank" rel="noopener noreferrer">Learn more →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-text">
+                <p>We see floods before they make waves.<br>Together, let's build resilient cities.</p>
+            </div>
+            <div class="social-links">
+                <a href="https://linkedin.com/company/streetflow" target="_blank" rel="noopener noreferrer">
+                    <img src="linkedin-icon.svg" alt="LinkedIn" class="social-icon">
+                </a>
+                <!-- <a href="https://instagram.com/streetflow" target="_blank" rel="noopener noreferrer">
+                    <img src="instagram-icon.svg" alt="Instagram" class="social-icon">
+                </a> -->
+            </div>
+        </div>
+        <div class="footer-email">contact@streetflow.tech</div>
+        <!-- <div class="footer-links">
+            <a href="/privacy-policy">Privacy policy</a>
+            <span class="separator">·</span>
+            <a href="/cookie-settings">Cookie Settings</a>
+        </div> -->
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const closeMenuButton = document.querySelector('.close-menu');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav .nav-link, .mobile-nav .contact-button');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeMenuButton.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+</body>
+</html>
